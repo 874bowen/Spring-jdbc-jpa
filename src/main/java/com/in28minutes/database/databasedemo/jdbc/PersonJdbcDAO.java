@@ -13,6 +13,22 @@ public class PersonJdbcDAO {
     // create a connection to the database
     @Autowired
     JdbcTemplate jdbcTemplate;
+
+    // define rowMapper -> implement a simple interface RowMapper
+    // inner class because we want this to be used only inside PersonJdbcDAO
+    class PersonRowMapper implements RowMapper<Person>{
+
+        @Override
+        public Person mapRow(ResultSet rs, int rowNum) throws SQLException {
+            Person person = new Person();
+            person.setId(rs.getInt("id"));
+            person.setName(rs.getString("name"));
+            person.setLocation(rs.getString("location"));
+            person.setBirthDate(rs.getTimestamp("birth_date"));
+            return person;
+        }
+    }
+
     //select * from person - from a query we get a result set
     public List<Person> findAll(){
         // in SpringJdbc there a automatic mapper so when column name matches - id -> id in the db
