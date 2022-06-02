@@ -40,5 +40,41 @@ public class PersonJdbcDAO {
 //                new BeanPropertyRowMapper<Person>(Person.class));
         // Whenever we are using beanROwMapper the Person bean should hava an empty constructor
         // Simple no args constructor
+        /* In some cases, you would want to define your own mapper
+        * may be the names of the class and db don't match*/
+        return jdbcTemplate.query("select * from person",
+                new PersonRowMapper());
+    }
+    public Person findById(int id){
+        // When we want a list we use .query() but when we want 1 thing we use .queryForObject()
+        return jdbcTemplate.queryForObject("select * from person where id=?",
+                new BeanPropertyRowMapper<Person>(Person.class),
+                id);
+    }
+    public Person findByName(String name){
+        // When we want a list we use .query() but when we want 1 thing we use .queryForObject()
+        return jdbcTemplate.queryForObject("select * from person where name=?",
+                new BeanPropertyRowMapper<Person>(Person.class),
+                name);
+    }
+    // delete operation
+    public int deleteByID(int id){
+        // When you want to delete or update use the update() method
+        return jdbcTemplate.update("delete from person where id=?", id);
+    }
+    // insert operation
+    public int insert(Person person){
+        // When you want to delete or update use the update() method
+        return jdbcTemplate.update("insert into person (id, name, location, birth_date) " +
+                        "values(? , ?, ?, ?)",
+                person.getId(), person.getName(), person.getLocation(), new Timestamp(person.getBirthDate().getTime()));
+    }
+    // update operation
+    public int update(Person person){
+        // When you want to delete or update use the update() method
+        return jdbcTemplate.update("update person " +
+                        "set name = ?, location = ?, birth_date = ? " +
+                        "where id=?",
+                person.getName(), person.getLocation(), new Timestamp(person.getBirthDate().getTime()), person.getId());
     }
 }
