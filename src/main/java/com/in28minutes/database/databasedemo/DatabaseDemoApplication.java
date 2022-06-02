@@ -27,5 +27,13 @@ public class DatabaseDemoApplication implements CommandLineRunner {
 	public void run(String... args) throws Exception {
 		// fire the query
 		logger.info("All users -> {}", dao.findAll());
+		logger.info("User id 10001 -> {}", dao.findById(10001));
+		logger.info("User Ivan -> {}", dao.findByName("Ivan"));
+		logger.info("Deleting User with id 10002 -> No of rows deleted {}", dao.deleteByID(10002));
+		logger.info("Creating User with id 10006 -> No of rows added {}",
+				dao.insert(new Person(10006, "Ian", "Nai", new Date())));
+		logger.info("Updating User with id 10001 -> No of rows added {}",
+				dao.update(new Person(10001, "Toroitich", "Eldy", new Date())));
+		logger.info("All users -> {}", dao.findAll());
 	}
 }
