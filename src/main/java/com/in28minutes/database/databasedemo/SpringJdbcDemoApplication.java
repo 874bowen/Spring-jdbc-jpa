@@ -13,8 +13,8 @@ import java.util.Date;
 
 // the code which we write in a specific method would be launched up as soon as
 // applicationContext is ready
-@SpringBootApplication
-public class DatabaseDemoApplication implements CommandLineRunner {
+// @SpringBootApplication // Commented out this so that JDBC code doesn't get fired
+public class SpringJdbcDemoApplication implements CommandLineRunner {
 
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 	@Autowired
