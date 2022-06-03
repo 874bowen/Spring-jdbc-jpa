@@ -5,6 +5,7 @@ import java.util.Date;
 public class Person {
 
     private int id;
+    // @Column(name = "name") // when column name doesn't match
     private String name;
     private String location;
     private Date birthDate;
